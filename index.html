@@ -351,12 +351,29 @@ document.addEventListener('click',e=>{
   }
 });
 function submitForm(){
-  const name=document.getElementById('f-name').value.trim();
-  const email=document.getElementById('f-email').value.trim();
-  if(!name||!email){alert('Please fill in at least your name and email.');return}
-  const s=document.getElementById('f-success');
-  s.style.display='block';
-  setTimeout(()=>s.style.display='none',4000);
+  const name    = document.getElementById('f-name').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const type    = document.getElementById('f-type').value;
+  const details = document.getElementById('f-details').value.trim();
+
+  if(!name || !email){
+    alert('Please fill in at least your name and email.');
+    return;
+  }
+
+  const subject = encodeURIComponent(`Voice Acting Inquiry – ${type || 'General'}`);
+  const body    = encodeURIComponent(
+    `Name: ${name}\n` +
+    `Email: ${email}\n` +
+    `Project Type: ${type || 'Not specified'}\n\n` +
+    `Project Details:\n${details || 'None provided'}`
+  );
+
+  window.location.href = `mailto:beglenno@gmail.com?subject=${subject}&body=${body}`;
+
+  const s = document.getElementById('f-success');
+  s.style.display = 'block';
+  setTimeout(() => s.style.display = 'none', 4000);
 }
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
